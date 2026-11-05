@@ -1,0 +1,670 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#000000">
+<link rel="icon" type="image/png" href="img/logo_oficial_1.png">
+<title>Center Cell Store</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Center Cell Store em Buritirama-BA: iPhone e Android, caixas de som, fones, acessórios originais, perfumes árabes e assistência técnica especializada.">
+<meta property="og:title" content="Center Cell Store · Buritirama-BA">
+<meta property="og:description" content="Smartphones, acessórios e assistência técnica especializada.">
+<meta property="og:image" content="img/fachada.webp">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@200;300;400;500;600;700;800;900&display=swap">
+<style>
+/* Layout: vitrine de loja à noite — fundo preto absoluto, filetes de neon ciano em diagonal (o teto da loja), seções simétricas em grade de 12 */
+:root{
+  --black:#000000; --surface:#04080A; --surface-2:#071013;
+  --cyan:#00FFFF; --cyan-soft:rgba(0,255,255,.14); --cyan-line:rgba(0,255,255,.22);
+  --white:#FFFFFF; --paper:#F4F8F8; --muted:#95A5A8; --ink-muted:#3A4648;
+  --font:"Outfit",ui-rounded,"SF Pro Rounded",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --r:18px; --max:1240px;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--black);color:var(--white);font-family:var(--font);font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:60;background:var(--black)}
+img,video{display:block;max-width:100%;height:auto}
+a{color:inherit;text-decoration:none}
+h1,h2,h3{margin:0;line-height:1.04;text-wrap:balance;letter-spacing:-.02em}
+p{margin:0}
+.wrap{max-width:var(--max);margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+section{position:relative;padding-block:clamp(64px,9vw,120px);overflow-x:clip}
+html,body{overflow-x:clip}
+.b{font-weight:800}.t{font-weight:200}
+.c-cyan{color:var(--cyan)}
+:focus-visible{outline:2px solid var(--cyan);outline-offset:3px;border-radius:6px}
+
+/* ---------- botões (invertem no hover) ---------- */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:52px;padding:0 26px;border-radius:999px;font:600 16px/1 var(--font);border:2px solid transparent;cursor:pointer;transition:background .25s,color .25s,border-color .25s,box-shadow .25s,transform .25s;white-space:nowrap}
+.btn svg{width:20px;height:20px;flex:none}
+.btn:active{transform:scale(.97)}
+.btn-cyan{background:var(--cyan);color:var(--black);border-color:var(--cyan);box-shadow:0 0 28px rgba(0,255,255,.35)}
+.btn-cyan:hover{background:var(--black);color:var(--cyan)}
+.btn-line{background:transparent;color:var(--white);border-color:rgba(255,255,255,.5)}
+.btn-line:hover{background:var(--white);color:var(--black);border-color:var(--white)}
+.btn-dark{background:var(--black);color:var(--cyan);border-color:var(--black)}
+.btn-dark:hover{background:var(--cyan);color:var(--black);border-color:var(--black)}
+.btn-ink{background:var(--black);color:var(--white);border-color:var(--black)}
+.btn-ink:hover{background:var(--white);color:var(--black)}
+
+/* ---------- intro ---------- */
+#intro{position:fixed;inset:0;z-index:100;background:var(--black);display:grid;place-items:center;transition:opacity .7s ease,visibility .7s}
+#intro.out{opacity:0;visibility:hidden}
+#intro .lg{width:min(70vw,440px);position:relative}
+#intro img{width:100%;clip-path:inset(0 100% 0 0);animation:wipe 1.1s cubic-bezier(.7,0,.2,1) .2s forwards,glow 1.4s ease 1.2s forwards;filter:drop-shadow(0 0 0 rgba(0,255,255,0))}
+#intro .scan{position:absolute;top:-10%;bottom:-10%;width:2px;left:0;background:var(--cyan);box-shadow:0 0 18px 4px var(--cyan);opacity:0;animation:scan 1.1s cubic-bezier(.7,0,.2,1) .2s forwards}
+@keyframes wipe{to{clip-path:inset(0 0 0 0)}}
+@keyframes scan{0%{left:0;opacity:1}90%{opacity:1}100%{left:100%;opacity:0}}
+@keyframes glow{50%{filter:drop-shadow(0 0 22px rgba(0,255,255,.7))}100%{filter:drop-shadow(0 0 8px rgba(0,255,255,.35))}}
+body.lock{overflow:hidden}
+
+/* ---------- header ---------- */
+.hdr{position:fixed;top:env(safe-area-inset-top,0px);left:0;right:0;z-index:50;transition:background .3s,border-color .3s;border-bottom:1px solid transparent}
+.hdr.solid{background:rgba(0,0,0,.86);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-color:var(--cyan-soft)}
+.hdr .wrap{display:flex;align-items:center;justify-content:space-between;gap:20px;height:76px}
+.hdr .logo img{height:44px;width:auto}
+.nav{display:flex;gap:26px;font-size:15px;color:var(--muted)}
+.nav a{transition:color .2s}.nav a:hover{color:var(--cyan)}
+.hdr .btn{min-height:44px;padding:0 18px;font-size:15px}
+@media (max-width:1020px){.nav{display:none}}
+@media (max-width:480px){.hdr .btn span{display:none}.hdr .btn{padding:0;width:46px}.hdr .logo img{height:38px}}
+
+/* ---------- neon diagonais ---------- */
+.neon{position:absolute;inset:0;overflow:hidden;pointer-events:none}
+.neon i{position:absolute;height:3px;width:160%;left:-30%;background:linear-gradient(90deg,transparent,var(--cyan) 30%,var(--cyan) 70%,transparent);box-shadow:0 0 14px 2px rgba(0,255,255,.55);opacity:.55;transform-origin:center}
+.neon i::after{content:"";position:absolute;inset:-2px 0;background:linear-gradient(90deg,transparent 0,rgba(255,255,255,.95) 50%,transparent 100%);background-size:30% 100%;background-repeat:no-repeat;animation:run 6s linear infinite}
+@keyframes run{from{background-position:-40% 0}to{background-position:140% 0}}
+
+/* ---------- hero ---------- */
+.hero{padding-top:calc(76px + clamp(40px,6vw,80px));padding-bottom:clamp(56px,7vw,96px);overflow:hidden}
+.hero .neon i:nth-child(1){top:12%;transform:rotate(-24deg)}
+.hero .neon i:nth-child(2){top:78%;transform:rotate(24deg);opacity:.35}
+.hero .neon i:nth-child(2)::after{animation-delay:-3s}
+.hero-g{position:relative;display:grid;grid-template-columns:1.08fr .92fr;gap:clamp(32px,5vw,72px);align-items:center}
+.kick{display:inline-flex;align-items:center;gap:10px;font-size:14px;color:var(--cyan);border:1px solid var(--cyan-line);border-radius:999px;padding:7px 14px;background:rgba(0,255,255,.05)}
+.kick .dot{width:8px;height:8px;border-radius:50%;background:var(--cyan);box-shadow:0 0 10px var(--cyan);animation:blink 1.8s infinite}
+@keyframes blink{50%{opacity:.25}}
+.hero h1{font-size:clamp(42px,6.4vw,86px);margin:22px 0 22px}
+.hero h1 .t{display:block;color:var(--cyan);text-shadow:0 0 30px rgba(0,255,255,.35)}
+.bio{display:grid;gap:10px;margin-bottom:34px;color:#D6E2E3;font-size:17px}
+.bio li{display:flex;gap:12px;align-items:center;list-style:none}
+.bio svg{width:22px;height:22px;color:var(--cyan);flex:none}
+.bio{padding:0}
+.ctas{display:flex;flex-wrap:wrap;gap:14px}
+.hero-ph{position:relative;max-width:480px;justify-self:end;width:100%}
+.frame{position:relative;border-radius:26px;padding:2px;background:linear-gradient(140deg,var(--cyan),rgba(0,255,255,.05) 40%,rgba(0,255,255,.05) 60%,var(--cyan));box-shadow:0 0 60px rgba(0,255,255,.18)}
+.frame img{border-radius:24px;aspect-ratio:4/5;object-fit:cover;width:100%}
+.ceo-tag{position:absolute;left:18px;right:18px;bottom:18px;background:rgba(0,0,0,.88);backdrop-filter:blur(10px);border:1px solid var(--cyan-line);border-radius:16px;padding:14px 18px;display:flex;gap:14px;align-items:center}
+.ceo-tag strong{font-size:38px;font-weight:800;color:var(--cyan);line-height:1}
+.ceo-tag span{font-size:14px;line-height:1.35;color:#CFDADB}
+.ceo-tag b{display:block;color:var(--white);font-size:16px}
+.ceo-tag strong{flex:none;min-width:34px;text-align:center}
+@media (max-width:900px){.hero-g{grid-template-columns:1fr}.hero-ph{justify-self:center}}
+@media (max-width:420px){.ceo-tag{left:12px;right:12px;bottom:12px;padding:12px 14px}.ceo-tag strong{font-size:32px}}
+
+/* ---------- faixa ciano ---------- */
+.band{background:var(--cyan);color:var(--black);overflow:hidden;padding-block:18px;position:relative;z-index:2}
+.marq{display:flex;gap:44px;width:max-content;animation:marq 30s linear infinite;font-weight:700;font-size:20px;white-space:nowrap}
+.marq span{display:inline-flex;align-items:center;gap:44px}
+.marq span::after{content:"";width:10px;height:10px;background:var(--black);transform:rotate(45deg)}
+@keyframes marq{to{transform:translateX(-50%)}}
+
+/* ---------- cabeçalho de seção ---------- */
+.sh{text-align:center;max-width:780px;margin:0 auto clamp(36px,5vw,56px)}
+.sh h2{font-size:clamp(34px,4.8vw,62px)}
+.sh p{margin-top:16px;color:var(--muted);font-size:clamp(16px,1.6vw,19px)}
+.light{background:var(--white);color:var(--black)}
+.light .sh p{color:var(--ink-muted)}
+.blue{background:var(--cyan);color:var(--black)}
+.blue .sh p{color:#063237}
+.center{display:flex;justify-content:center;flex-wrap:wrap;gap:14px;margin-top:clamp(32px,4vw,48px)}
+
+/* ---------- carrossel (destaque central) ---------- */
+.cf{position:relative;user-select:none;-webkit-user-select:none;touch-action:pan-y}
+.cf-stage{position:relative;height:calc(var(--w) * 1.25 + 44px);--w:clamp(230px,27vw,340px);perspective:1400px}
+.cf-item{position:absolute;top:16px;left:50%;width:var(--w);aspect-ratio:4/5;border-radius:var(--r);overflow:hidden;transition:transform .7s cubic-bezier(.2,.8,.2,1),opacity .7s,filter .7s;background:var(--surface);will-change:transform;cursor:pointer}
+.cf-item img,.cf-item video{width:100%;height:100%;object-fit:cover;border-radius:var(--r);clip-path:inset(0 round var(--r))}
+.cf-item{backface-visibility:hidden;-webkit-backface-visibility:hidden}
+.cf-item.on{cursor:default;box-shadow:0 0 0 2px var(--cyan),0 0 50px rgba(0,255,255,.35)}
+.blue .cf-item.on{box-shadow:0 0 0 3px var(--black),0 24px 60px rgba(0,0,0,.45)}
+.cf-cap{position:absolute;left:0;right:0;bottom:0;border-radius:0 0 var(--r) var(--r);padding:44px 18px 16px;background:linear-gradient(transparent,rgba(0,0,0,.86));color:var(--white);transition:opacity .4s}
+.cf-cap b{display:block;font-size:20px;font-weight:700;line-height:1.15}
+.cf-cap small{font-size:14px;color:var(--cyan)}
+.cf-item:not(.on) .cf-cap{opacity:0}
+.cf-ui{display:flex;align-items:center;justify-content:center;gap:22px;margin-top:22px}
+.cf-btn{width:52px;height:52px;border-radius:50%;display:grid;place-items:center;border:2px solid var(--cyan);background:transparent;color:var(--cyan);cursor:pointer;transition:background .25s,color .25s}
+.cf-btn:hover{background:var(--cyan);color:var(--black)}
+.cf-btn svg{width:22px;height:22px}
+.blue .cf-btn{border-color:var(--black);color:var(--black)}
+.blue .cf-btn:hover{background:var(--black);color:var(--cyan)}
+.cf-dots{display:flex;gap:7px;flex-wrap:wrap;justify-content:center;max-width:260px}
+.cf-dots button{width:8px;height:8px;border-radius:99px;border:0;padding:0;background:rgba(255,255,255,.28);cursor:pointer;transition:width .3s,background .3s}
+.cf-dots button.on{width:26px;background:var(--cyan)}
+.blue .cf-dots button{background:rgba(0,0,0,.25)}.blue .cf-dots button.on{background:var(--black)}
+
+/* ---------- assistência ---------- */
+.svc-g{display:grid;grid-template-columns:minmax(240px,380px) 1fr;gap:clamp(28px,5vw,72px);align-items:center}
+.svc-col{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.svc{display:flex;align-items:center;gap:16px;padding:16px 18px;border-radius:16px;border:2px solid var(--black);background:var(--black);color:var(--white);transition:background .25s,color .25s,transform .25s}
+.svc:hover{background:var(--white);color:var(--black);transform:translateY(-2px)}
+.svc .ic{width:50px;height:50px;border-radius:14px;background:var(--cyan);color:var(--black);display:grid;place-items:center;flex:none;transition:background .25s,color .25s}
+.svc:hover .ic{background:var(--black);color:var(--cyan)}
+.svc .ic svg{width:26px;height:26px}
+.svc b{display:block;font-size:17px;line-height:1.2}
+.svc span{font-size:14px;color:#A9B8BA;line-height:1.35;display:block;margin-top:3px;transition:color .25s}
+.svc:hover span{color:var(--ink-muted)}
+.phone-x{justify-self:center;width:100%}
+.phone-x img{width:100%;max-width:380px;margin:0 auto}
+@media (max-width:980px){.svc-g{grid-template-columns:1fr}.phone-x img{max-width:240px}}
+@media (max-width:620px){.svc-col{grid-template-columns:1fr;gap:12px}}
+
+/* ---------- grades de foto ---------- */
+.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(12px,1.6vw,20px)}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(12px,1.6vw,20px)}
+.tile{position:relative;border-radius:var(--r);overflow:hidden;background:var(--surface);aspect-ratio:4/5}
+.tile.sq{aspect-ratio:1}
+.tile img{width:100%;height:100%;object-fit:cover;transition:transform .8s cubic-bezier(.2,.8,.2,1)}
+.tile:hover img{transform:scale(1.06)}
+.tile .cap{position:absolute;left:0;right:0;bottom:0;padding:40px 16px 14px;background:linear-gradient(transparent,rgba(0,0,0,.85));color:var(--white)}
+.tile .cap b{display:block;font-size:17px;line-height:1.2}
+.tile .cap small{color:var(--cyan);font-size:13px}
+.dark-tiles .tile{border:1px solid var(--cyan-soft)}
+@media (max-width:860px){.grid4{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:640px){.grid3{grid-template-columns:1fr}.grid3 .tile{max-width:420px;width:100%;margin:0 auto!important}}
+
+/* variedades */
+.var-g{display:grid;grid-template-columns:1fr 1fr;gap:clamp(28px,5vw,64px);align-items:center}
+.var-g .tile{max-width:520px;width:100%;justify-self:center}
+.var-g h2{font-size:clamp(40px,5.6vw,74px)}
+.var-g p.lead{margin:18px 0 28px;color:var(--ink-muted);font-size:18px;max-width:46ch}
+.chips{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:0;margin:0 0 32px}
+.chips li{list-style:none;display:flex;align-items:center;gap:12px;padding:14px 16px;border-radius:14px;background:var(--paper);border:1.5px solid #E1E8E9;font-weight:600;font-size:16px;transition:background .25s,color .25s}
+.chips li:hover{background:var(--black);color:var(--white)}
+.chips li::before{content:"";width:9px;height:9px;flex:none;background:var(--cyan);border:1.5px solid var(--black);transform:rotate(45deg)}
+@media (max-width:860px){.var-g{grid-template-columns:1fr}}
+@media (max-width:400px){.chips{grid-template-columns:1fr}}
+
+/* perfumes */
+.perf{overflow:hidden}
+.perf .neon i:nth-child(1){top:8%;transform:rotate(-8deg);opacity:.3}
+.perf .neon i:nth-child(2){bottom:8%;transform:rotate(8deg);opacity:.3}
+.perf .quote{font-size:clamp(30px,4.4vw,58px)}
+.perf .quote .t{display:block;color:var(--muted);font-style:italic}
+
+/* atendimento */
+.at-head{display:grid;grid-template-columns:1fr 1fr;gap:28px;align-items:end;margin-bottom:clamp(32px,4vw,52px)}
+.at-head h2{font-size:clamp(40px,5.6vw,74px)}
+.at-head p{color:var(--ink-muted);font-size:18px;max-width:48ch}
+@media (max-width:860px){.at-head{grid-template-columns:1fr}}
+
+/* CEO band */
+.ceo-g{display:grid;grid-template-columns:minmax(240px,400px) 1fr;gap:clamp(28px,5vw,72px);align-items:center}
+.ceo-ph{margin:0;position:relative;border-radius:var(--r);overflow:hidden;border:3px solid var(--black);box-shadow:14px 14px 0 var(--black)}
+.ceo-ph img{width:100%;aspect-ratio:4/5;object-fit:cover}
+.ceo-ph figcaption{position:absolute;left:12px;bottom:12px;background:var(--black);color:var(--cyan);font-size:13px;font-weight:600;padding:6px 12px;border-radius:99px}
+.ceo-top{display:flex;align-items:center;gap:14px;margin-bottom:10px}
+.ceo-top .n{font-size:clamp(96px,11vw,150px);font-weight:900;line-height:1;letter-spacing:-.04em;padding-right:.04em}
+.ceo-top .lbl{font-size:clamp(20px,2vw,26px);font-weight:700;line-height:1.1;border-left:3px solid var(--black);padding-left:14px}
+.ceo-tx h2{font-size:clamp(30px,3.8vw,50px)}
+.ceo-tx p{margin:16px 0 20px;color:#063237;font-size:18px;max-width:54ch}
+.ceo-pts{display:flex;flex-wrap:wrap;gap:10px;padding:0;margin:0 0 26px}
+.ceo-pts li{list-style:none;background:var(--black);color:var(--white);font-size:15px;font-weight:600;padding:9px 14px;border-radius:99px}
+@media (max-width:860px){.ceo-g{grid-template-columns:1fr}.ceo-ph{max-width:380px;justify-self:center;width:100%}}
+
+/* clientes */
+.cli-g{display:grid;grid-template-columns:repeat(4,1fr);grid-template-rows:auto auto;gap:clamp(12px,1.6vw,20px)}
+.cli-g .feat{grid-column:2/4;grid-row:1/3}
+.cli-g .feat .cap b{font-size:clamp(18px,2vw,26px)}
+.cli-g .tile{border:1px solid var(--cyan-soft)}
+.cli-g .feat{box-shadow:0 0 0 2px var(--cyan),0 0 60px rgba(0,255,255,.25);border:0}
+@media (max-width:760px){.cli-g{grid-template-columns:1fr 1fr}.cli-g .feat{grid-column:1/-1;grid-row:auto}}
+
+/* localização */
+.loc-g{display:grid;grid-template-columns:1fr 1fr;gap:clamp(14px,2vw,24px)}
+.loc-g .tile{aspect-ratio:auto;height:100%;min-height:420px}
+.map{position:relative;border-radius:var(--r);overflow:hidden;border:1px solid var(--cyan-line);background:#030607;min-height:420px}
+.map iframe{position:absolute;inset:0;width:100%;height:100%;border:0;filter:invert(92%) hue-rotate(180deg) saturate(.6) brightness(.9) contrast(1.1)}
+.map svg.grid{position:absolute;inset:0;width:100%;height:100%}
+.pin{position:absolute;left:50%;top:50%;width:0;height:0;pointer-events:none}
+.pin .ring{position:absolute;left:-14px;top:-7px;width:28px;height:14px;border-radius:50%;border:2px solid var(--cyan);animation:ring 2.2s ease-out infinite;opacity:0}
+.pin .ring:nth-child(2){animation-delay:.7s}.pin .ring:nth-child(3){animation-delay:1.4s}
+@keyframes ring{0%{transform:scale(.4);opacity:.9}100%{transform:scale(4.2);opacity:0}}
+.pin .shadow{position:absolute;left:-12px;top:-5px;width:24px;height:10px;border-radius:50%;background:rgba(0,0,0,.6);filter:blur(2px)}
+.pin .body{position:absolute;left:-22px;top:-62px;width:44px;height:44px;border-radius:50% 50% 50% 0;transform:rotate(-45deg);background:radial-gradient(circle at 30% 30%,#B8FFFF 0,var(--cyan) 30%,#00A8B0 75%,#006E74 100%);box-shadow:inset -4px -4px 8px rgba(0,0,0,.35),0 0 26px rgba(0,255,255,.7);animation:bob 2.2s ease-in-out infinite}
+.pin .body::after{content:"";position:absolute;inset:13px;border-radius:50%;background:radial-gradient(circle at 40% 40%,#1a1a1a,#000);box-shadow:inset 0 2px 3px rgba(255,255,255,.25)}
+@keyframes bob{50%{transform:rotate(-45deg) translate(4px,-4px)}}
+.map-card{position:absolute;left:14px;right:14px;bottom:14px;background:rgba(0,0,0,.88);backdrop-filter:blur(10px);border:1px solid var(--cyan-line);border-radius:14px;padding:14px 16px;display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+.map-card b{display:block;font-size:16px}.map-card span{font-size:14px;color:var(--muted)}
+.loc-info{display:grid;grid-template-columns:1fr 1fr;gap:clamp(14px,2vw,24px);margin-top:clamp(14px,2vw,24px)}
+.panel{border:1px solid var(--cyan-line);border-radius:var(--r);background:var(--surface);padding:clamp(20px,2.4vw,30px)}
+.panel h3{font-size:22px;display:flex;align-items:center;gap:10px;margin-bottom:16px}
+.panel h3 svg{width:24px;height:24px;color:var(--cyan)}
+.hours{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}
+.hours td{padding:9px 0;border-bottom:1px solid rgba(255,255,255,.07);font-size:16px}
+.hours td:last-child{text-align:right;color:var(--muted)}
+.hours tr.today td{color:var(--cyan);font-weight:700}
+.status{display:inline-flex;align-items:center;gap:8px;font-size:14px;padding:5px 12px;border-radius:99px;margin-left:auto;font-weight:600}
+.status.open{background:rgba(0,255,255,.12);color:var(--cyan)}.status.closed{background:rgba(255,255,255,.08);color:var(--muted)}
+.status::before{content:"";width:8px;height:8px;border-radius:50%;background:currentColor}
+.addr{font-size:19px;line-height:1.5;margin-bottom:22px}
+.addr small{display:block;color:var(--muted);font-size:15px;margin-top:6px}
+.btn-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.btn-row .btn{width:100%;padding:0 14px}
+@media (max-width:860px){.loc-g,.loc-info{grid-template-columns:1fr}.loc-g .tile{min-height:0;aspect-ratio:4/5}}
+@media (max-width:420px){.btn-row{grid-template-columns:1fr}}
+
+/* footer */
+.ft{background:var(--white);color:var(--black);padding-block:clamp(48px,6vw,72px) calc(28px + env(safe-area-inset-bottom,0px))}
+.ft-g{display:grid;grid-template-columns:1.2fr 1fr 1fr 1fr;gap:32px}
+.ft-g img{height:62px;width:auto}
+.ft-g h4{margin:0 0 12px;font-size:15px;color:var(--ink-muted);font-weight:600}
+.ft-g p,.ft-g a{font-size:16px;line-height:1.7;display:block}
+.ft-g a:hover{text-decoration:underline;text-underline-offset:4px}
+.ft-g .sel{user-select:all}
+.ft-bot{margin-top:40px;padding-top:22px;border-top:1px solid #E1E8E9;display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;font-size:14px;color:var(--ink-muted)}
+@media (max-width:860px){.ft-g{grid-template-columns:1fr 1fr}}
+@media (max-width:480px){.ft-g{grid-template-columns:1fr}}
+
+/* whatsapp flutuante */
+.fab{position:fixed;right:calc(18px + env(safe-area-inset-right,0px));bottom:calc(18px + env(safe-area-inset-bottom,0px));z-index:40;width:62px;height:62px;border-radius:50%;background:var(--cyan);color:var(--black);display:grid;place-items:center;border:2px solid var(--cyan);box-shadow:0 0 0 0 rgba(0,255,255,.6);animation:pulse 2.4s infinite;transition:background .25s,color .25s}
+.fab:hover{background:var(--black);color:var(--cyan)}
+.fab svg{width:30px;height:30px}
+@keyframes pulse{70%{box-shadow:0 0 0 18px rgba(0,255,255,0)}100%{box-shadow:0 0 0 0 rgba(0,255,255,0)}}
+
+/* divisor entre seções */
+.div{height:2px;background:linear-gradient(90deg,transparent,var(--cyan),transparent);box-shadow:0 0 16px rgba(0,255,255,.6);transform:scaleX(0);transition:transform 1.4s cubic-bezier(.2,.8,.2,1)}
+.div.in{transform:scaleX(1)}
+
+/* palavras dos títulos */
+.w{display:inline-block;overflow:hidden;vertical-align:bottom;padding:0 .18em .12em .04em;margin:0 -.18em -.12em -.04em}
+.js .w>span{display:inline-block;transform:translateY(105%);transition:transform 1s cubic-bezier(.2,.8,.2,1)}
+.in .w>span,.w.in>span{transform:none}
+/* entrada das seções coloridas */
+.js .tr{clip-path:inset(5% 4% 0 4% round 48px);transition:clip-path 1.3s cubic-bezier(.2,.8,.2,1)}
+.js .tr.in{clip-path:inset(0 0 0 0 round 0)}
+.js p.rv,.js .sh.rv p{filter:blur(0)}
+/* revelações */
+.js .rv{opacity:0;transform:translateY(34px);transition:opacity .9s cubic-bezier(.2,.8,.2,1),transform .9s cubic-bezier(.2,.8,.2,1)}
+.js .rv.img{transform:none;clip-path:inset(12% 12% 12% 12% round var(--r));transition:opacity .9s,clip-path 1.1s cubic-bezier(.2,.8,.2,1)}
+.js .rv.in{opacity:1;transform:none}
+.js .rv.img.in{clip-path:inset(0 0 0 0 round var(--r))}
+@media (prefers-reduced-motion:reduce){.js .w>span{transform:none}.js .tr{clip-path:none}*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}.js .rv{opacity:1;transform:none;clip-path:none}.marq{animation:none}}
+</style>
+</head>
+<body>
+
+<div id="intro" aria-hidden="true"><div class="lg"><img src="img/logo_oficial_1.png" alt=""><i class="scan"></i></div></div>
+
+<header class="hdr" id="hdr">
+  <div class="wrap">
+    <a class="logo" href="#topo" aria-label="Center Cell Store, início"><img src="img/logo_oficial_1.png" alt="Center Cell Store"></a>
+    <nav class="nav" aria-label="Seções">
+      <a href="#aparelhos">Aparelhos</a><a href="#assistencia">Assistência</a><a href="#acessorios">Acessórios</a><a href="#perfumes">Perfumes</a><a href="#clientes">Clientes</a><a href="#localizacao">Localização</a>
+    </nav>
+    <a class="btn btn-cyan wa" href="#" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><use href="#i-wa"/></svg><span>Chamar no WhatsApp</span></a>
+  </div>
+</header>
+
+<main id="topo">
+<!-- HERO -->
+<section class="hero">
+  <div class="neon"><i></i><i></i></div>
+  <div class="wrap hero-g">
+    <div>
+      <span class="kick rv"><i class="dot"></i>Buritirama, Bahia</span>
+      <h1 class="rv"><span class="b">Celulares, acessórios</span><span class="t">e assistência técnica.</span></h1>
+      <ul class="bio rv">
+        <li><svg viewBox="0 0 24 24"><use href="#i-phone"/></svg>Smartphones, acessórios e assistência</li>
+        <li><svg viewBox="0 0 24 24"><use href="#i-tool"/></svg>Assistência técnica especializada e serviços de alto padrão</li>
+        <li><svg viewBox="0 0 24 24"><use href="#i-watch"/></svg>Acessórios originais e de alta qualidade</li>
+      </ul>
+      <div class="ctas rv">
+        <a class="btn btn-cyan wa" href="#" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><use href="#i-wa"/></svg>Escolher meu celular</a>
+        <a class="btn btn-line" href="#assistencia">Ver serviços de reparo</a>
+      </div>
+    </div>
+    <div class="hero-ph rv">
+      <div class="frame"><img src="img/ceo.webp" alt="Marlos Daniel, CEO da Center Cell, segurando um iPhone na loja" width="1122" height="1402" fetchpriority="high"></div>
+      <div class="ceo-tag"><strong>9</strong><span><b>Marlos Daniel</b>CEO, há 9 anos à frente da loja</span></div>
+    </div>
+  </div>
+</section>
+
+<div class="band" aria-hidden="true"><div class="marq"><span>iPhone</span><span>Android</span><span>Caixas de som</span><span>Fones de ouvido</span><span>Troca de tela</span><span>Manutenção especializada</span><span>Acessórios originais</span><span>Perfumes árabes</span><span>iPhone</span><span>Android</span><span>Caixas de som</span><span>Fones de ouvido</span><span>Troca de tela</span><span>Manutenção especializada</span><span>Acessórios originais</span><span>Perfumes árabes</span></div></div>
+
+<!-- APARELHOS -->
+<section id="aparelhos">
+  <div class="wrap">
+    <div class="sh rv"><h2><span class="b">Do iPhone ao Android,</span> <span class="t">tem o seu aqui.</span></h2><p>iPhone, Redmi, POCO e Realme em várias cores e memórias. Passe para o lado e veja o que está na vitrine agora.</p></div>
+    <div class="cf rv" data-auto="3800" data-items='[["cel-iphone13","iPhone 13","Azul e Estelar"],["cel-redminote15pro","Redmi Note 15 Pro","256 GB"],["cel-pococ85","POCO C85","256 GB"],["cel-realmenote70","Realme Note 70","128 GB ou 256 GB"],["cel-redmi15-256","Redmi 15","256 GB"],["cel-redminote17","Redmi Note 17","Último lançamento"],["cel-pococ75","POCO C75","256 GB"],["cel-realmec75x","Realme C75x","256 GB, com NFC"],["cel-redminote14","Redmi Note 14","128 GB ou 256 GB"],["cel-redminote15","Redmi Note 15","256 GB"],["cel-redmi15-128","Redmi 15","128 GB"],["cel-realmec75x-2","Realme C75x","Produto original Realme"]]'></div>
+    <div class="center rv"><a class="btn btn-cyan wa" data-msg="Olá! Quero saber os celulares disponíveis." href="#" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><use href="#i-wa"/></svg>Consultar modelos e preços</a></div>
+  </div>
+</section>
+
+<!-- ASSISTÊNCIA -->
+<section id="assistencia" class="blue">
+  <div class="wrap">
+    <div class="sh rv"><h2><span class="b">Assistência técnica</span> <span class="t">especializada para seu aparelho.</span></h2><p>Os reparos mais procurados para iPhone e Android, feitos na loja por quem conhece cada peça.</p></div>
+    <div class="svc-g">
+      <div class="phone-x rv img"><img src="img/iphone-interno.webp" alt="Interior de um iPhone aberto mostrando placa, bateria e componentes" width="700" height="1186" loading="lazy"></div>
+      <div class="svc-col">
+        <div class="svc rv"><span class="ic"><svg viewBox="0 0 24 24"><use href="#s-tela"/></svg></span><div><b>Troca de tela</b><span>Display trincado, manchas ou toque falhando</span></div></div>
+        <div class="svc rv"><span class="ic"><svg viewBox="0 0 24 24"><use href="#s-bat"/></svg></span><div><b>Troca de bateria</b><span>Bateria viciada ou descarregando rápido</span></div></div>
+        <div class="svc rv"><span class="ic"><svg viewBox="0 0 24 24"><use href="#s-plug"/></svg></span><div><b>Conector de carga</b><span>Celular que não carrega ou só carrega de jeito</span></div></div>
+        <div class="svc rv"><span class="ic"><svg viewBox="0 0 24 24"><use href="#s-cam"/></svg></span><div><b>Câmeras</b><span>Traseira e frontal, lente e foco</span></div></div>
+        <div class="svc rv"><span class="ic"><svg viewBox="0 0 24 24"><use href="#s-som"/></svg></span><div><b>Alto-falante e microfone</b><span>Som baixo, chiado ou ninguém te ouve</span></div></div>
+        <div class="svc rv"><span class="ic"><svg viewBox="0 0 24 24"><use href="#s-tampa"/></svg></span><div><b>Tampa traseira</b><span>Vidro traseiro quebrado ou riscado</span></div></div>
+        <div class="svc rv"><span class="ic"><svg viewBox="0 0 24 24"><use href="#s-btn"/></svg></span><div><b>Botões</b><span>Power e volume travados ou sem resposta</span></div></div>
+        <div class="svc rv"><span class="ic"><svg viewBox="0 0 24 24"><use href="#s-chip"/></svg></span><div><b>Reparo em placa</b><span>Aparelho que não liga ou reinicia sozinho</span></div></div>
+        <div class="svc rv"><span class="ic"><svg viewBox="0 0 24 24"><use href="#s-gota"/></svg></span><div><b>Desoxidação</b><span>Celular que molhou ou caiu na água</span></div></div>
+        <div class="svc rv"><span class="ic"><svg viewBox="0 0 24 24"><use href="#s-soft"/></svg></span><div><b>Software e atualização</b><span>Sistema travando, formatação e backup</span></div></div>
+      </div>
+    </div>
+    <div class="center rv"><a class="btn btn-dark wa" data-msg="Olá! Preciso de um orçamento de conserto." href="#" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><use href="#i-wa"/></svg>Pedir orçamento do conserto</a></div>
+  </div>
+</section>
+
+<!-- VITRINE ACESSÓRIOS -->
+<section id="acessorios">
+  <div class="wrap">
+    <div class="sh rv"><h2><span class="b">Som, capas e fones</span> <span class="t">na vitrine.</span></h2><p>Caixas de som, cases e fones originais, de marcas como JBL, α'Gold, Altomex e Elef.</p></div>
+    <div class="grid4 dark-tiles">
+      <figure class="tile rv img" style="margin:0"><img src="img/ac-jbl-boombox4.webp" alt="JBL Boombox 4" loading="lazy"><figcaption class="cap"><b>JBL Boombox 4</b><small>Pronta entrega</small></figcaption></figure>
+      <figure class="tile rv img" style="margin:0"><img src="img/ac-caixa-50w.webp" alt="Caixas de som Altomex AL-8208" loading="lazy"><figcaption class="cap"><b>Altomex AL-8208</b><small>Caixa de som 50 W</small></figcaption></figure>
+      <figure class="tile rv img" style="margin:0"><img src="img/ac-caixa-gold.webp" alt="Caixas de som α'Gold" loading="lazy"><figcaption class="cap"><b>α'Gold SM-51</b><small>Caixa de som 10 W, IPX6</small></figcaption></figure>
+      <figure class="tile rv img" style="margin:0"><img src="img/ac-caixa-altomex.webp" alt="Caixas de som Altomex na loja" loading="lazy"><figcaption class="cap"><b>Altomex na cor areia</b><small>Bluetooth e IPX5</small></figcaption></figure>
+      <figure class="tile rv img" style="margin:0"><img src="img/ac-case-premium.webp" alt="Cases premium Elef" loading="lazy"><figcaption class="cap"><b>Case Premium Elef</b><small>Anti-impacto, para iPhone 17 Pro Max</small></figcaption></figure>
+      <figure class="tile rv img" style="margin:0"><img src="img/ac-case-crystal.webp" alt="Case transparente Crystal Palace" loading="lazy"><figcaption class="cap"><b>Crystal Palace</b><small>Case transparente anti-impacto</small></figcaption></figure>
+      <figure class="tile rv img" style="margin:0"><img src="img/ac-fone-tws.webp" alt="Fone sem fio α'Gold" loading="lazy"><figcaption class="cap"><b>α'Gold FN-BT2</b><small>Fone sem fio, Bluetooth 5.4</small></figcaption></figure>
+      <figure class="tile rv img" style="margin:0"><img src="img/ac-headphone.webp" alt="Headphone α'Gold" loading="lazy"><figcaption class="cap"><b>α'Gold FN-GB02</b><small>Headphone sem fio, até 12 h</small></figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<!-- VÍDEOS CELULARES (azul) -->
+<section id="videos-celulares" class="blue">
+  <div class="wrap">
+    <div class="sh rv"><h2><span class="b">Veja de perto</span> <span class="t">antes de levar.</span></h2><p>Os aparelhos em vídeo, do jeito que estão na loja.</p></div>
+    <div class="cf rv" data-video="1" data-auto="6500" data-items='[["ce2","iPhone 17 Pro Max","256 GB"],["ce3","Redmi Note 15","128 GB e 256 GB"],["ce1","POCO","512 GB, 12 GB de RAM e NFC"],["ce6","iPhone 13 Pro Max","128 GB"],["ce5","Redmi Note 17","Lançamento"],["ce4","Hotwav A17 Pro Max","Android"]]'></div>
+    <div class="center rv"><a class="btn btn-dark wa" data-msg="Olá! Vi os vídeos no site e quero saber mais de um aparelho." href="#" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><use href="#i-wa"/></svg>Quero um desses</a></div>
+  </div>
+</section>
+
+<!-- VARIEDADES -->
+<section id="variedades" class="light">
+  <div class="wrap var-g">
+    <figure class="tile rv img" style="margin:0"><img src="img/variedades.webp" alt="Parede de capas de celular na loja Center Cell" loading="lazy"></figure>
+    <div>
+      <h2 class="rv"><span class="b">Variedades</span> <span class="t">em acessórios.</span></h2>
+      <p class="lead rv">Da capinha do dia a dia ao fone para treinar: uma parede inteira de opções, para quase todos os modelos.</p>
+      <ul class="chips rv">
+        <li>Capas e cases</li><li>Carregadores</li><li>Cabos USB</li><li>Fones de ouvido</li>
+        <li>Headphones e gamer</li><li>Caixas de som</li><li>Smartwatches</li><li>Rádios retrô</li>
+      </ul>
+      <div class="rv"><a class="btn btn-ink wa" data-msg="Olá! Procuro um acessório para o meu celular." href="#" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><use href="#i-wa"/></svg>Achar acessório para o meu modelo</a></div>
+    </div>
+  </div>
+</section>
+
+<!-- VÍDEOS ACESSÓRIOS -->
+<section id="videos-acessorios">
+  <div class="wrap">
+    <div class="sh rv"><h2><span class="b">Acessórios</span> <span class="t">em movimento.</span></h2><p>Capas, cases e fones que acabaram de chegar.</p></div>
+    <div class="cf rv" data-video="1" data-auto="6500" data-items='[["ac8","Case Evoclear","Alta resistência, não amarela"],["ac1","Capa Elef","iPhone 17 Pro Max"],["ac6","Headphone Pure Bass","Wireless, cancelamento de ruído"],["ac2","Case transparente","Cores e detalhes"],["ac3","Fone gamer","Com microfone"],["ac4","Capas de couro","iPhone 15 Pro"],["ac7","Fone sem fio JBL","Várias cores"],["ac5","Capas 18 Pro Max","Novidades"]]'></div>
+  </div>
+</section>
+
+<!-- ATENDIMENTO -->
+<section id="atendimento" class="light">
+  <div class="wrap">
+    <div class="at-head">
+      <h2 class="rv"><span class="b">Atendimento</span> <span class="t">impecável.</span></h2>
+      <p class="rv">Você é atendido por gente que entende de celular e explica sem enrolação: ajuda a escolher o aparelho, mostra as opções e acompanha até a entrega.</p>
+    </div>
+    <div class="grid3">
+      <figure class="tile rv img" style="margin:0"><img src="img/atend-1.webp" alt="Atendente da Center Cell com caixas de celulares no balcão" loading="lazy"></figure>
+      <figure class="tile rv img" style="margin:0"><img src="img/atend-2.webp" alt="Atendente configurando um iPhone no balcão" loading="lazy"></figure>
+      <figure class="tile rv img" style="margin:0"><img src="img/atend-3.webp" alt="Duas clientes conversando na entrada da loja" loading="lazy"></figure>
+    </div>
+  </div>
+</section>
+
+<!-- PERFUMES -->
+<section id="perfumes" class="perf">
+  <div class="neon"><i></i><i></i></div>
+  <div class="wrap" style="position:relative">
+    <div class="sh rv"><h2 class="quote"><span class="t">“Não sei o que dar pra ele.”</span><span class="b">Homem gosta disso aqui.</span></h2><p>Perfumes árabes Lattafa e Maison Alhambra: Asad, Asad Bourbon, Fakhar e No.2 Men. Presente certo, com caixa de presente.</p></div>
+    <div class="grid4 dark-tiles">
+      <figure class="tile sq rv img" style="margin:0"><img src="img/perf-presente.webp" alt="Perfumes Asad Bourbon, Velvet Musk e No.2 Men" loading="lazy"><figcaption class="cap"><b>Seleção para presente</b><small>Asad Bourbon e No.2 Men</small></figcaption></figure>
+      <figure class="tile sq rv img" style="margin:0"><img src="img/perf-asad.webp" alt="Perfumes Lattafa Asad e Asad Bourbon" loading="lazy"><figcaption class="cap"><b>Asad e Asad Bourbon</b><small>Lattafa</small></figcaption></figure>
+      <figure class="tile sq rv img" style="margin:0"><img src="img/perf-fakhar-trio.webp" alt="Três versões do perfume Fakhar Lattafa" loading="lazy"><figcaption class="cap"><b>Fakhar</b><small>Lattafa, três versões</small></figcaption></figure>
+      <figure class="tile sq rv img" style="margin:0"><img src="img/perf-fakhar-gold.webp" alt="Perfume Fakhar Lattafa dourado na caixa" loading="lazy"><figcaption class="cap"><b>Fakhar Gold</b><small>Lattafa</small></figcaption></figure>
+    </div>
+    <div class="center rv"><a class="btn btn-cyan wa" data-msg="Olá! Quero saber dos perfumes árabes." href="#" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><use href="#i-wa"/></svg>Escolher um perfume</a></div>
+  </div>
+</section>
+
+<!-- CEO -->
+<section class="blue ceo-b" id="ceo">
+  <div class="wrap ceo-g">
+    <figure class="ceo-ph rv img"><img src="img/atend-4.webp" alt="Marlos Daniel, CEO da Center Cell, com um cliente na loja" loading="lazy"><figcaption>Marlos Daniel com cliente na loja</figcaption></figure>
+    <div class="ceo-tx">
+      <div class="ceo-top rv"><span class="n">9</span><span class="lbl">anos<br>de loja</span></div>
+      <h2 class="rv"><span class="b">Marlos Daniel</span> <span class="t">à frente da Center Cell.</span></h2>
+      <p class="rv">São nove anos atendendo Buritirama e região pessoalmente: vendendo celular com procedência, consertando com cuidado e acompanhando cada cliente até o aparelho sair funcionando.</p>
+      <ul class="ceo-pts rv">
+        <li>Atendimento direto com o dono</li><li>Aparelhos com procedência</li><li>Assistência na própria loja</li>
+      </ul>
+      <div class="rv"><a class="btn btn-dark wa" href="#" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><use href="#i-wa"/></svg>Falar com a loja</a></div>
+    </div>
+  </div>
+</section>
+
+<!-- CLIENTES -->
+<section id="clientes">
+  <div class="wrap">
+    <div class="sh rv"><h2><span class="b">Cliente satisfeito</span> <span class="t">volta e traz a família.</span></h2><p>Cada foto aqui é de um cliente de verdade, saindo da loja com o celular novo na mão. É assim que a Center Cell cresce: de indicação em indicação.</p></div>
+    <div class="cli-g">
+      <figure class="tile sq rv img" style="margin:0"><img src="img/cli-1.webp" alt="Cliente com celular novo e sacola da loja" loading="lazy"></figure>
+      <figure class="tile sq feat rv img" style="margin:0"><img src="img/cli-familia.webp" alt="Família de clientes com presentes e celulares na loja" loading="lazy"><figcaption class="cap"><b>Obrigado por fazer parte da nossa história.</b><small>Família de clientes no Dia do Cliente</small></figcaption></figure>
+      <figure class="tile sq rv img" style="margin:0"><img src="img/cli-2.webp" alt="Cliente recebendo seu iPhone" loading="lazy"></figure>
+      <figure class="tile sq rv img" style="margin:0"><img src="img/cli-4.webp" alt="Cliente com celular realme novo" loading="lazy"></figure>
+      <figure class="tile sq rv img" style="margin:0"><img src="img/cli-5.webp" alt="Cliente com celular novo e sacola" loading="lazy"></figure>
+    </div>
+    <div class="center rv"><a class="btn btn-cyan wa" href="#" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><use href="#i-wa"/></svg>Ser o próximo cliente</a></div>
+  </div>
+</section>
+
+<div class="wrap"><div class="div rv"></div></div>
+
+<!-- LOCALIZAÇÃO -->
+<section id="localizacao">
+  <div class="wrap">
+    <div class="sh rv"><h2><span class="b">Venha conhecer</span> <span class="t">a loja.</span></h2><p>Travessa Dois de Julho, 443, em Buritirama. Fachada preta com o letreiro em neon, não tem como errar.</p></div>
+    <div class="loc-g">
+      <figure class="tile rv img" style="margin:0"><img src="img/fachada.webp" alt="Fachada da Center Cell Store" loading="lazy"></figure>
+      <div class="map rv" id="map">
+        <svg class="grid" viewBox="0 0 400 420" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+          <rect width="400" height="420" fill="#030607"/>
+          <g stroke="#0E2226" stroke-width="10" fill="none"><path d="M-10 120 L410 90"/><path d="M-10 300 L410 330"/><path d="M90 -10 L120 430"/><path d="M300 -10 L270 430"/></g>
+          <g stroke="#123035" stroke-width="16" fill="none"><path d="M-10 214 L410 206"/><path d="M196 -10 L204 430"/></g>
+          <g stroke="#0A1719" stroke-width="5" fill="none"><path d="M-10 40 L410 20"/><path d="M-10 390 L410 400"/><path d="M30 -10 L40 430"/><path d="M360 -10 L370 430"/></g>
+          <text x="214" y="196" fill="#2F5C62" font-family="Outfit,sans-serif" font-size="11">Tv. Dois de Julho</text>
+        </svg>
+        <div class="pin" aria-hidden="true"><i class="ring"></i><i class="ring"></i><i class="ring"></i><i class="shadow"></i><i class="body"></i></div>
+        <div class="map-card"><div><b>Center Cell Store</b><span>Tv. Dois de Julho, 443, Buritirama-BA</span></div><a class="btn btn-cyan" style="min-height:42px;padding:0 16px;font-size:14px" href="" data-maps target="_blank" rel="noopener">Ver no mapa</a></div>
+      </div>
+    </div>
+    <div class="loc-info">
+      <div class="panel rv">
+        <h3><svg viewBox="0 0 24 24"><use href="#i-pin"/></svg>Endereço</h3>
+        <p class="addr">Travessa Dois de Julho, 443<small>Buritirama, Bahia, CEP 47120-000</small></p>
+        <div class="btn-row">
+          <a class="btn btn-cyan" data-maps href="" target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><use href="#i-pin"/></svg>Abrir no Google Maps</a>
+          <a class="btn btn-line" data-waze href="" target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><use href="#i-nav"/></svg>Abrir no Waze</a>
+        </div>
+      </div>
+      <div class="panel rv">
+        <h3><svg viewBox="0 0 24 24"><use href="#i-clock"/></svg>Horário <span class="status" id="status"></span></h3>
+        <table class="hours" id="hours"></table>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer class="ft">
+  <div class="wrap">
+    <div class="ft-g">
+      <div><img src="img/logo_oficial_2.png" alt="Center Cell Store" loading="lazy"><p style="margin-top:14px;color:var(--ink-muted)">Celulares, acessórios, perfumes e assistência técnica em Buritirama-BA.</p></div>
+      <div><h4>Contato</h4><a class="wa" href="#" target="_blank" rel="noopener">WhatsApp (77) 9950-0850</a><a href="mailto:centercell.ba@gmail.com" class="sel">centercell.ba@gmail.com</a><a href="https://www.instagram.com/center_cell.ba/" target="_blank" rel="noopener">Instagram @center_cell.ba</a></div>
+      <div><h4>Endereço</h4><p>Travessa Dois de Julho, 443<br>Buritirama-BA, 47120-000</p></div>
+      <div><h4>Horário</h4><p>Segunda a sábado, 08:00 às 19:00<br>Domingo fechado</p><h4 style="margin-top:16px">CNPJ</h4><p class="sel">33.153.334/0001-54</p></div>
+    </div>
+    <div class="ft-bot"><span>© <span id="yr">2026</span> Center Cell Store. Todos os direitos reservados.</span><span>Site por Logotop Design</span></div>
+  </div>
+</footer>
+
+<a class="fab wa" href="#" target="_blank" rel="noopener" aria-label="Chamar no WhatsApp"><svg viewBox="0 0 24 24" fill="currentColor"><use href="#i-wa"/></svg></a>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="i-wa" viewBox="0 0 24 24"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.1l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.6.8-.8 1-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.3-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6a2.7 2.7 0 0 0 1.8-1.3 2.2 2.2 0 0 0 .2-1.3c-.1-.1-.3-.2-.6-.3Z"/></symbol>
+    
+    <symbol id="i-phone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="2.5" width="12" height="19" rx="2.5"/><path d="M10.5 18.5h3"/></symbol>
+    <symbol id="i-tool" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a4 4 0 0 0 5 5L21 13l-8 8-3.5-3.5 8-8"/><path d="M14.7 6.3 9 12"/><path d="m3 21 6-6"/><path d="M5 3 3 5l4 4 2-2Z"/></symbol>
+    <symbol id="i-watch" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="6" width="12" height="12" rx="3"/><path d="M9 6 9.5 2.5h5L15 6M9 18l.5 3.5h5L15 18M12 9.5V12l1.5 1.5"/></symbol>
+    <symbol id="i-pin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s7-6.2 7-12a7 7 0 0 0-14 0c0 5.8 7 12 7 12Z"/><circle cx="12" cy="9" r="2.6"/></symbol>
+    <symbol id="i-nav" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11 21 3l-8 18-2-8-8-2Z"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+    <symbol id="i-l" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 5-7 7 7 7"/></symbol>
+    <symbol id="i-r" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 5 7 7-7 7"/></symbol>
+    <symbol id="s-tela" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="2.5" width="12" height="19" rx="2.5"/><path d="m9 7 3 3-2 2 4 4M14 6l-2 4"/></symbol>
+    <symbol id="s-bat" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="7" width="17" height="10" rx="2"/><path d="M21.5 10.5v3M11.5 8.8 9 12.5h3.5L10 15.2"/></symbol>
+    <symbol id="s-plug" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M9 2.5v4M15 2.5v4M6.5 6.5h11V10a5.5 5.5 0 0 1-11 0Z"/><path d="M12 15.5v6"/></symbol>
+    <symbol id="s-cam" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8.5A2 2 0 0 1 5 6.5h2.5L9 4h6l1.5 2.5H19a2 2 0 0 1 2 2V18a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2Z"/><circle cx="12" cy="13" r="3.6"/></symbol>
+    <symbol id="s-som" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9.5h3.5L12 5v14l-4.5-4.5H4Z"/><path d="M15.5 9a4 4 0 0 1 0 6M18.5 6.5a7.5 7.5 0 0 1 0 11"/></symbol>
+    <symbol id="s-tampa" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="2.5" width="12" height="19" rx="2.5"/><rect x="8.5" y="5" width="4.5" height="5.5" rx="1.2"/><circle cx="10.75" cy="6.6" r=".4"/><circle cx="10.75" cy="9" r=".4"/></symbol>
+    <symbol id="s-btn" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v8"/><path d="M7.1 6.4a7.5 7.5 0 1 0 9.8 0"/></symbol>
+    <symbol id="s-chip" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="6.5" y="6.5" width="11" height="11" rx="1.5"/><rect x="9.5" y="9.5" width="5" height="5" rx=".6"/><path d="M9.5 3v3.5M14.5 3v3.5M9.5 17.5V21M14.5 17.5V21M3 9.5h3.5M3 14.5h3.5M17.5 9.5H21M17.5 14.5H21"/></symbol>
+    <symbol id="s-gota" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.8s6.5 7 6.5 11.4a6.5 6.5 0 0 1-13 0C5.5 9.8 12 2.8 12 2.8Z"/><path d="M9 14.5a3 3 0 0 0 3 3"/></symbol>
+    <symbol id="s-soft" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M20 11a8 8 0 0 0-14.7-4.3L4 8.5M4 13a8 8 0 0 0 14.7 4.3L20 15.5"/><path d="M4 4v4.5h4.5M20 20v-4.5h-4.5"/></symbol>
+  </defs>
+</svg>
+
+<script>
+(function(){
+  var d=document,root=d.documentElement;root.classList.add('js');
+  var PHONE='557799500850';
+  var ADDR='Center Cell, Travessa Dois de Julho, 443, Buritirama - BA, 47120-000';
+  var reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* links */
+  d.querySelectorAll('.wa').forEach(function(a){
+    var m=a.getAttribute('data-msg')||'Olá! Vim pelo site da Center Cell.';
+    a.href='https://wa.me/'+PHONE+'?text='+encodeURIComponent(m);
+  });
+  d.querySelectorAll('[data-maps]').forEach(function(a){a.href='https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(ADDR)});
+  d.querySelectorAll('[data-waze]').forEach(function(a){a.href='https://waze.com/ul?q='+encodeURIComponent('Travessa Dois de Julho 443, Buritirama BA')+'&navigate=yes'});
+  d.getElementById('yr').textContent=new Date().getFullYear();
+
+  /* mapa real (no site publicado; dentro da prévia do Claude iframes são bloqueados) */
+  if(!/claude|anthropic/.test(location.hostname)){
+    var f=d.createElement('iframe');f.loading='lazy';f.title='Mapa da Center Cell';f.referrerPolicy='no-referrer-when-downgrade';
+    f.src='https://maps.google.com/maps?q='+encodeURIComponent(ADDR)+'&z=17&output=embed';
+    var m=d.getElementById('map');m.insertBefore(f,m.querySelector('.pin'));
+  }
+
+  /* intro */
+  var intro=d.getElementById('intro');d.body.classList.add('lock');
+  function endIntro(){intro.classList.add('out');d.body.classList.remove('lock');setTimeout(function(){intro.remove()},800);startReveal()}
+  intro.addEventListener('click',endIntro);
+  setTimeout(endIntro,reduce?200:2700);
+
+  /* header */
+  var hdr=d.getElementById('hdr');
+  function onS(){hdr.classList.toggle('solid',scrollY>30)}onS();addEventListener('scroll',onS,{passive:true});
+
+  /* revelações */
+  /* quebra títulos em palavras para animar */
+  d.querySelectorAll('main h1, main h2').forEach(function(h){
+    var k=0;
+    (function walk(n){[].slice.call(n.childNodes).forEach(function(c){
+      if(c.nodeType===3){var parts=c.textContent.split(/(\s+)/),fr=d.createDocumentFragment();
+        parts.forEach(function(p){if(!p)return;if(/^\s+$/.test(p)){fr.appendChild(d.createTextNode(' '));return}
+          var w=d.createElement('span');w.className='w';var i=d.createElement('span');i.textContent=p;i.style.transitionDelay=(120+k++*70)+'ms';w.appendChild(i);fr.appendChild(w)});
+        c.parentNode.replaceChild(fr,c)}else if(c.nodeType===1)walk(c)})})(h);
+    if(!h.closest('.rv'))h.classList.add('rv');
+  });
+  d.querySelectorAll('main section.blue, main section.light').forEach(function(s){s.classList.add('tr','rv-s')});
+  function startReveal(){
+    if(!('IntersectionObserver' in window)){d.querySelectorAll('.rv,.rv-s').forEach(function(e){e.classList.add('in')});return}
+    var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{threshold:.12,rootMargin:'0px 0px -6% 0px'});
+    d.querySelectorAll('.rv-s').forEach(function(e){io.observe(e)});
+    d.querySelectorAll('.rv').forEach(function(e){
+      var sib=e.parentElement?[].indexOf.call(e.parentElement.children,e):0;
+      e.style.transitionDelay=Math.min(sib,5)*80+'ms';io.observe(e)});
+  }
+
+  /* horários */
+  var days=[['Segunda-feira',1],['Terça-feira',2],['Quarta-feira',3],['Quinta-feira',4],['Sexta-feira',5],['Sábado',6],['Domingo',0]];
+  var now=new Date(new Date().toLocaleString('en-US',{timeZone:'America/Bahia'}));var wd=now.getDay(),hm=now.getHours()*60+now.getMinutes();
+  d.getElementById('hours').innerHTML=days.map(function(x){return '<tr class="'+(x[1]===wd?'today':'')+'"><td>'+x[0]+'</td><td>'+(x[1]===0?'Fechado':'08:00 às 19:00')+'</td></tr>'}).join('');
+  var open=wd!==0&&hm>=480&&hm<1140,st=d.getElementById('status');st.textContent=open?'Aberto agora':'Fechado agora';st.className='status '+(open?'open':'closed');
+
+  /* carrosséis com destaque central */
+  d.querySelectorAll('.cf').forEach(function(cf){
+    var items=JSON.parse(cf.getAttribute('data-items')),vid=cf.hasAttribute('data-video'),n=items.length,act=0,timer;
+    var stage=d.createElement('div');stage.className='cf-stage';
+    var els=items.map(function(it,i){
+      var el=d.createElement('div');el.className='cf-item';el.setAttribute('role','group');el.setAttribute('aria-label',it[1]+', '+(i+1)+' de '+n);
+      var media=vid?'<video muted playsinline loop preload="none" poster="vid/'+it[0]+'.jpg" src="vid/'+it[0]+'.mp4"></video>':'<img src="img/'+it[0]+'.webp" alt="'+it[1]+'" loading="lazy" draggable="false">';
+      el.innerHTML=media+'<div class="cf-cap"><b>'+it[1]+'</b><small>'+it[2]+'</small></div>';
+      el.addEventListener('click',function(){if(i!==act){go(i);restart()}});
+      stage.appendChild(el);return el});
+    var ui=d.createElement('div');ui.className='cf-ui';
+    ui.innerHTML='<button class="cf-btn" aria-label="Anterior"><svg viewBox="0 0 24 24"><use href="#i-l"/></svg></button><div class="cf-dots"></div><button class="cf-btn" aria-label="Próximo"><svg viewBox="0 0 24 24"><use href="#i-r"/></svg></button>';
+    var dots=ui.querySelector('.cf-dots');
+    items.forEach(function(it,i){var b=d.createElement('button');b.setAttribute('aria-label','Ir para '+it[1]);b.onclick=function(){go(i);restart()};dots.appendChild(b)});
+    cf.appendChild(stage);cf.appendChild(ui);
+    var btns=ui.querySelectorAll('.cf-btn');btns[0].onclick=function(){go(act-1);restart()};btns[1].onclick=function(){go(act+1);restart()};
+    var visible=false;
+    function layout(){
+      var narrow=innerWidth<640,gap=narrow?.62:.72;
+      els.forEach(function(el,i){
+        var o=i-act;if(o>n/2)o-=n;if(o<-n/2)o+=n;var a=Math.abs(o);
+        var hide=a>(narrow?1:2);
+        el.style.transform='translateX(calc(-50% + '+(o*gap*100)+'%)) translateY('+(a*4)+'%) scale('+(1-a*.17)+')';
+        el.style.opacity=hide?0:(a===0?1:a===1?.85:.45);
+        el.style.filter=a===0?'none':'brightness('+(a===1?.7:.5)+')';
+        el.style.zIndex=10-a;el.style.pointerEvents=hide?'none':'auto';
+        el.classList.toggle('on',a===0);
+        if(vid){var v=el.querySelector('video');
+          if(visible&&a<=1){if(v.preload!=='auto'){v.preload='auto'}var p=v.play();if(p&&p.catch)p.catch(function(){})}else{v.pause()}}
+      });
+      [].forEach.call(dots.children,function(b,i){b.classList.toggle('on',i===act)});
+    }
+    function go(i){act=(i+n)%n;layout()}
+    var auto=+cf.getAttribute('data-auto')||4000;
+    function restart(){clearInterval(timer);if(!reduce)timer=setInterval(function(){if(visible&&!cf.matches(':hover'))go(act+1)},auto)}
+    new IntersectionObserver(function(es){visible=es[0].isIntersecting;layout()},{threshold:.2}).observe(cf);
+    /* arrastar */
+    var sx=null;
+    stage.addEventListener('pointerdown',function(e){sx=e.clientX});
+    addEventListener('pointerup',function(e){if(sx===null)return;var dx=e.clientX-sx;sx=null;if(Math.abs(dx)>40){go(act+(dx<0?1:-1));restart()}});
+    cf.tabIndex=0;cf.addEventListener('keydown',function(e){if(e.key==='ArrowRight'){go(act+1);restart()}if(e.key==='ArrowLeft'){go(act-1);restart()}});
+    addEventListener('resize',layout);layout();restart();
+  });
+
+  /* rolagem suave compensando o header */
+  d.querySelectorAll('a[href^="#"]').forEach(function(a){a.addEventListener('click',function(e){var id=a.getAttribute('href');if(id.length<2)return;var t=d.querySelector(id);if(!t)return;e.preventDefault();scrollTo({top:t.getBoundingClientRect().top+scrollY-70,behavior:reduce?'auto':'smooth'})})});
+})();
+</script>
+
+</body>
+</html>
