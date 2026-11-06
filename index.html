@@ -175,7 +175,7 @@ body.lock{overflow:hidden}
 .tile .cap small{color:var(--cyan);font-size:13px}
 .dark-tiles .tile{border:1px solid var(--cyan-soft)}
 @media (max-width:860px){.grid4{grid-template-columns:repeat(2,1fr)}}
-@media (max-width:640px){.grid3{grid-template-columns:1fr}.grid3 .tile{max-width:420px;width:100%;margin:0 auto!important}}
+@media (max-width:640px){.grid3:not(.dark-tiles){grid-template-columns:1fr}.grid3.dark-tiles{grid-template-columns:1fr 1fr}.grid3 .tile{max-width:420px;width:100%;margin:0 auto!important}}
 
 /* variedades */
 .var-g{display:grid;grid-template-columns:1fr 1fr;gap:clamp(28px,5vw,64px);align-items:center}
@@ -223,6 +223,23 @@ body.lock{overflow:hidden}
 .iph-g .tile{border:1px solid var(--cyan-soft)}
 .iph-g .big{box-shadow:0 0 0 2px var(--cyan),0 0 50px rgba(0,255,255,.22);border:0}
 @media (max-width:700px){.iph-g{grid-template-columns:1fr 1fr}.iph-g .big{grid-column:1/-1;grid-row:auto;aspect-ratio:4/5;height:auto}}
+
+/* laboratório */
+.lab-g{display:grid;grid-template-columns:1fr minmax(260px,480px);gap:clamp(28px,5vw,72px);align-items:center}
+.lab-g h2{font-size:clamp(40px,5.6vw,74px)}
+.lab-g .lead{margin:18px 0 28px;color:var(--muted);font-size:18px;max-width:50ch}
+.lab-g .tile{border:0;box-shadow:0 0 0 2px var(--cyan),0 0 50px rgba(0,255,255,.22)}
+.lab-pts{display:grid;gap:12px;padding:0;margin:0 0 30px}
+.lab-pts li{list-style:none;display:flex;gap:16px;align-items:center;padding:16px 18px;border:1px solid var(--cyan-line);border-radius:16px;background:var(--surface);transition:background .25s,color .25s}
+.lab-pts li:hover{background:var(--cyan);color:var(--black)}
+.lab-pts svg{width:26px;height:26px;flex:none;color:var(--cyan);transition:color .25s}
+.lab-pts li:hover svg{color:var(--black)}
+.lab-pts b{display:block;font-size:17px;line-height:1.2}
+.lab-pts span{font-size:14px;color:var(--muted);transition:color .25s}
+.lab-pts li:hover span{color:#063237}
+.lab-pts li span b{color:var(--white);transition:color .25s}
+.lab-pts li:hover span b{color:var(--black)}
+@media (max-width:860px){.lab-g{grid-template-columns:1fr}.lab-g .tile{max-width:440px;width:100%;justify-self:center;order:-1}}
 
 /* clientes */
 .cli-g{display:grid;grid-template-columns:repeat(4,1fr);grid-template-rows:auto auto;gap:clamp(12px,1.6vw,20px)}
@@ -312,7 +329,7 @@ body.lock{overflow:hidden}
   <div class="wrap">
     <a class="logo" href="#topo" aria-label="Center Cell Store, início"><img src="img/logo_oficial_1.png" alt="Center Cell Store"></a>
     <nav class="nav" aria-label="Seções">
-      <a href="#aparelhos">Aparelhos</a><a href="#assistencia">Assistência</a><a href="#acessorios">Acessórios</a><a href="#perfumes">Perfumes</a><a href="#clientes">Clientes</a><a href="#localizacao">Localização</a>
+      <a href="#aparelhos">Aparelhos</a><a href="#assistencia">Assistência</a><a href="#laboratorio">Laboratório</a><a href="#acessorios">Acessórios</a><a href="#perfumes">Perfumes</a><a href="#clientes">Clientes</a><a href="#localizacao">Localização</a>
     </nav>
     <a class="btn btn-cyan wa" href="#" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><use href="#i-wa"/></svg><span>Chamar no WhatsApp</span></a>
   </div>
@@ -349,7 +366,7 @@ body.lock{overflow:hidden}
 <section id="aparelhos">
   <div class="wrap">
     <div class="sh rv"><h2><span class="b">Do iPhone ao Android,</span> <span class="t">tem o seu aqui.</span></h2><p>iPhone, Redmi, POCO e Realme em várias cores e memórias. Passe para o lado e veja o que está na vitrine agora.</p></div>
-    <div class="cf rv" data-auto="3800" data-items='[["cel-iphone13","iPhone 13","Azul e Estelar"],["cel-pococ71-b","POCO C71","Lançamento na vitrine"],["cel-realmenote60x","Realme Note 60x","Na caixa, pronta entrega"],["cel-pococ71-c","POCO C71","Prata, azul e dourado"],["cel-pococ71-a","POCO C71","Várias cores"],["cel-redminote15pro","Redmi Note 15 Pro","256 GB"],["cel-pococ85","POCO C85","256 GB"],["cel-realmenote70","Realme Note 70","128 GB ou 256 GB"],["cel-redmi15-256","Redmi 15","256 GB"],["cel-redminote17","Redmi Note 17","Último lançamento"],["cel-pococ75","POCO C75","256 GB"],["cel-realmec75x","Realme C75x","256 GB, com NFC"],["cel-redminote14","Redmi Note 14","128 GB ou 256 GB"],["cel-redminote15","Redmi Note 15","256 GB"],["cel-redmi15-128","Redmi 15","128 GB"],["cel-realmec75x-2","Realme C75x","Produto original Realme"]]'></div>
+    <div class="cf rv" data-auto="3800" data-items='[["cel-iphone13","iPhone 13","Azul e Estelar"],["cel-pococ71-b","POCO C71","Lançamento na vitrine"],["cel-pococ71-mao","POCO C71","Preto e verde-água"],["cel-iphone-branco","iPhone","Branco"],["cel-pococ71-caixa","POCO C71","Lacrado na caixa"],["cel-na-loja","Escolha com calma","Teste o aparelho na loja"],["cel-realmenote60x","Realme Note 60x","Na caixa, pronta entrega"],["cel-pococ71-c","POCO C71","Prata, azul e dourado"],["cel-pococ71-a","POCO C71","Várias cores"],["cel-redminote15pro","Redmi Note 15 Pro","256 GB"],["cel-pococ85","POCO C85","256 GB"],["cel-realmenote70","Realme Note 70","128 GB ou 256 GB"],["cel-redmi15-256","Redmi 15","256 GB"],["cel-redminote17","Redmi Note 17","Último lançamento"],["cel-pococ75","POCO C75","256 GB"],["cel-realmec75x","Realme C75x","256 GB, com NFC"],["cel-redminote14","Redmi Note 14","128 GB ou 256 GB"],["cel-redminote15","Redmi Note 15","256 GB"],["cel-redmi15-128","Redmi 15","128 GB"],["cel-realmec75x-2","Realme C75x","Produto original Realme"]]'></div>
     <div class="center rv"><a class="btn btn-cyan wa" data-msg="Olá! Quero saber os celulares disponíveis." href="#" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><use href="#i-wa"/></svg>Consultar modelos e preços</a></div>
   </div>
 </section>
@@ -392,6 +409,25 @@ body.lock{overflow:hidden}
   </div>
 </section>
 
+<!-- LABORATÓRIO -->
+<section id="laboratorio">
+  <div class="wrap lab-g">
+    <div>
+      <h2 class="rv"><span class="b">Laboratório</span> <span class="t">na própria loja.</span></h2>
+      <p class="lead rv">O conserto acontece aqui, na nossa bancada. Com microscópio e ferramentas de precisão, o técnico enxerga cada componente da placa e resolve o defeito na origem.</p>
+      <ul class="lab-pts rv">
+        <li><svg viewBox="0 0 24 24"><use href="#s-chip"/></svg><span><b>Reparo em placa com microscópio</b>Solda e troca de componentes minúsculos</span></li>
+        <li><svg viewBox="0 0 24 24"><use href="#i-tool"/></svg><span><b>Bancada com ferramentas de precisão</b>Equipamento próprio para iPhone e Android</span></li>
+        <li><svg viewBox="0 0 24 24"><use href="#i-pin"/></svg><span><b>Seu aparelho não sai da loja</b>Tudo feito aqui em Buritirama</span></li>
+      </ul>
+      <div class="rv"><a class="btn btn-cyan wa" data-msg="Olá! Quero um diagnóstico do meu celular." href="#" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><use href="#i-wa"/></svg>Pedir diagnóstico</a></div>
+    </div>
+    <figure class="tile rv img" style="margin:0"><img src="img/laboratorio.webp" alt="Técnico da Center Cell consertando a placa de um celular no microscópio" loading="lazy"><figcaption class="cap"><b>Reparo em placa</b><small>Laboratório Center Cell</small></figcaption></figure>
+  </div>
+</section>
+
+<div class="wrap"><div class="div rv"></div></div>
+
 <!-- VITRINE ACESSÓRIOS -->
 <section id="acessorios">
   <div class="wrap">
@@ -400,7 +436,7 @@ body.lock{overflow:hidden}
       <figure class="tile rv img" style="margin:0"><img src="img/ac-jbl-boombox4.webp" alt="JBL Boombox 4" loading="lazy"><figcaption class="cap"><b>JBL Boombox 4</b><small>Pronta entrega</small></figcaption></figure>
       <figure class="tile rv img" style="margin:0"><img src="img/ac-caixa-50w.webp" alt="Caixas de som Altomex AL-8208" loading="lazy"><figcaption class="cap"><b>Altomex AL-8208</b><small>Caixa de som 50 W</small></figcaption></figure>
       <figure class="tile rv img" style="margin:0"><img src="img/ac-caixa-gold.webp" alt="Caixas de som α'Gold" loading="lazy"><figcaption class="cap"><b>α'Gold SM-51</b><small>Caixa de som 10 W, IPX6</small></figcaption></figure>
-      <figure class="tile rv img" style="margin:0"><img src="img/ac-caixa-altomex.webp" alt="Caixas de som Altomex na loja" loading="lazy"><figcaption class="cap"><b>Altomex na cor areia</b><small>Bluetooth e IPX5</small></figcaption></figure>
+      <figure class="tile rv img" style="margin:0"><img src="img/ac-smartwatch.webp" alt="Kit de smartwatch com pulseiras coloridas" loading="lazy"><figcaption class="cap"><b>Kit smartwatch</b><small>Com pulseiras extras</small></figcaption></figure>
       <figure class="tile rv img" style="margin:0"><img src="img/ac-case-premium.webp" alt="Cases premium Elef" loading="lazy"><figcaption class="cap"><b>Case Premium Elef</b><small>Anti-impacto, para iPhone 17 Pro Max</small></figcaption></figure>
       <figure class="tile rv img" style="margin:0"><img src="img/ac-case-crystal.webp" alt="Case transparente Crystal Palace" loading="lazy"><figcaption class="cap"><b>Crystal Palace</b><small>Case transparente anti-impacto</small></figcaption></figure>
       <figure class="tile rv img" style="margin:0"><img src="img/ac-fone-tws.webp" alt="Fone sem fio α'Gold" loading="lazy"><figcaption class="cap"><b>α'Gold FN-BT2</b><small>Fone sem fio, Bluetooth 5.4</small></figcaption></figure>
@@ -462,7 +498,9 @@ body.lock{overflow:hidden}
   <div class="neon"><i></i><i></i></div>
   <div class="wrap" style="position:relative">
     <div class="sh rv"><h2 class="quote"><span class="t">“Não sei o que dar pra ele.”</span><span class="b">Homem gosta disso aqui.</span></h2><p>Perfumes árabes Lattafa e Maison Alhambra: Asad, Asad Bourbon, Fakhar e No.2 Men. Presente certo, com caixa de presente.</p></div>
-    <div class="grid4 dark-tiles">
+    <div class="grid3 dark-tiles">
+      <figure class="tile sq rv img" style="margin:0"><img src="img/perf-fakhar-mao.webp" alt="Cliente segurando dois perfumes Fakhar Lattafa" loading="lazy"><figcaption class="cap"><b>Fakhar Gold e Rose</b><small>Lattafa</small></figcaption></figure>
+      <figure class="tile sq rv img" style="margin:0"><img src="img/perf-caixa-mao.webp" alt="Cliente segurando um perfume árabe e sua caixa" loading="lazy"><figcaption class="cap"><b>Perfume com caixa de presente</b><small>Pronto pra presentear</small></figcaption></figure>
       <figure class="tile sq rv img" style="margin:0"><img src="img/perf-presente.webp" alt="Perfumes Asad Bourbon, Velvet Musk e No.2 Men" loading="lazy"><figcaption class="cap"><b>Seleção para presente</b><small>Asad Bourbon e No.2 Men</small></figcaption></figure>
       <figure class="tile sq rv img" style="margin:0"><img src="img/perf-asad.webp" alt="Perfumes Lattafa Asad e Asad Bourbon" loading="lazy"><figcaption class="cap"><b>Asad e Asad Bourbon</b><small>Lattafa</small></figcaption></figure>
       <figure class="tile sq rv img" style="margin:0"><img src="img/perf-fakhar-trio.webp" alt="Três versões do perfume Fakhar Lattafa" loading="lazy"><figcaption class="cap"><b>Fakhar</b><small>Lattafa, três versões</small></figcaption></figure>
