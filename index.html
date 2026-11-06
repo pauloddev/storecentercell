@@ -249,6 +249,8 @@ body.lock{overflow:hidden}
 .cli-g .feat{box-shadow:0 0 0 2px var(--cyan),0 0 60px rgba(0,255,255,.25);border:0}
 @media (max-width:760px){.cli-g{grid-template-columns:1fr 1fr}.cli-g .feat{grid-column:1/-1;grid-row:auto;order:-1}}
 
+.cli-row{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(12px,1.6vw,20px);margin-top:clamp(12px,1.6vw,20px)}
+.cli-row .tile{border:1px solid var(--cyan-soft)}
 /* localização */
 .loc-g{display:grid;grid-template-columns:1fr 1fr;gap:clamp(14px,2vw,24px)}
 .loc-g .tile{aspect-ratio:auto;height:100%;min-height:420px}
@@ -457,7 +459,7 @@ body.lock{overflow:hidden}
 <!-- VARIEDADES -->
 <section id="variedades" class="light">
   <div class="wrap var-g">
-    <figure class="tile rv img" style="margin:0"><img src="img/variedades.webp" alt="Parede de capas de celular na loja Center Cell" loading="lazy"></figure>
+    <figure class="tile rv img" style="margin:0"><img src="img/variedades-balcao.webp" alt="Atendente da Center Cell com iPhone, Redmi Note 14 e caixa de som JBL no balcão" loading="lazy"></figure>
     <div>
       <h2 class="rv"><span class="b">Variedades</span> <span class="t">em acessórios.</span></h2>
       <p class="lead rv">Da capinha do dia a dia ao fone para treinar: uma parede inteira de opções, para quase todos os modelos.</p>
@@ -536,6 +538,11 @@ body.lock{overflow:hidden}
       <figure class="tile sq rv img" style="margin:0"><img src="img/cli-2.webp" alt="Cliente recebendo seu iPhone" loading="lazy"></figure>
       <figure class="tile sq rv img" style="margin:0"><img src="img/cli-4.webp" alt="Cliente com celular realme novo" loading="lazy"></figure>
       <figure class="tile sq rv img" style="margin:0"><img src="img/cli-5.webp" alt="Cliente com celular novo e sacola" loading="lazy"></figure>
+    </div>
+    <div class="cli-row">
+      <figure class="tile sq rv img" style="margin:0"><img src="img/cli-6.webp" alt="Cliente sorrindo com celular novo de capinha rosa e sacola da loja" loading="lazy"></figure>
+      <figure class="tile sq rv img" style="margin:0"><img src="img/cli-7.webp" alt="Cliente mostrando seu iPhone novo na loja" loading="lazy"></figure>
+      <figure class="tile sq rv img" style="margin:0"><img src="img/cli-8.webp" alt="Cliente com o filho no colo e iPhone novo na mão" loading="lazy"></figure>
     </div>
     <div class="center rv"><a class="btn btn-cyan wa" href="#" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><use href="#i-wa"/></svg>Ser o próximo cliente</a></div>
   </div>
