@@ -524,7 +524,7 @@ body.lock{overflow:hidden}
       <div><img src="img/logo_oficial_2.png" alt="Center Cell Store" loading="lazy"><p style="margin-top:14px;color:var(--ink-muted)">Celulares, acessórios, perfumes e assistência técnica em Buritirama-BA.</p></div>
       <div><h4>Contato</h4><a class="wa" href="#" target="_blank" rel="noopener">WhatsApp (77) 9950-0850</a><a href="mailto:centercell.ba@gmail.com" class="sel">centercell.ba@gmail.com</a><a href="https://www.instagram.com/center_cell.ba/" target="_blank" rel="noopener">Instagram @center_cell.ba</a></div>
       <div><h4>Endereço</h4><p>Travessa Dois de Julho, 443<br>Buritirama-BA, 47120-000</p></div>
-      <div><h4>Horário</h4><p>Segunda a sábado, 08:00 às 19:00<br>Domingo fechado</p><h4 style="margin-top:16px">CNPJ</h4><p class="sel">33.153.334/0001-54</p></div>
+      <div><h4>Horário</h4><p>Segunda a sexta, 08:00 às 19:00<br>Sábado, 08:00 às 14:00<br>Domingo fechado</p><h4 style="margin-top:16px">CNPJ</h4><p class="sel">33.153.334/0001-54</p></div>
     </div>
     <div class="ft-bot"><span>© <span id="yr">2026</span> Center Cell Store. Todos os direitos reservados.</span><span>Site por Logotop Design</span></div>
   </div>
@@ -614,8 +614,8 @@ body.lock{overflow:hidden}
   /* horários */
   var days=[['Segunda-feira',1],['Terça-feira',2],['Quarta-feira',3],['Quinta-feira',4],['Sexta-feira',5],['Sábado',6],['Domingo',0]];
   var now=new Date(new Date().toLocaleString('en-US',{timeZone:'America/Bahia'}));var wd=now.getDay(),hm=now.getHours()*60+now.getMinutes();
-  d.getElementById('hours').innerHTML=days.map(function(x){return '<tr class="'+(x[1]===wd?'today':'')+'"><td>'+x[0]+'</td><td>'+(x[1]===0?'Fechado':'08:00 às 19:00')+'</td></tr>'}).join('');
-  var open=wd!==0&&hm>=480&&hm<1140,st=d.getElementById('status');st.textContent=open?'Aberto agora':'Fechado agora';st.className='status '+(open?'open':'closed');
+  d.getElementById('hours').innerHTML=days.map(function(x){return '<tr class="'+(x[1]===wd?'today':'')+'"><td>'+x[0]+'</td><td>'+(x[1]===0?'Fechado':x[1]===6?'08:00 às 14:00':'08:00 às 19:00')+'</td></tr>'}).join('');
+  var open=wd!==0&&hm>=480&&hm<(wd===6?840:1140),st=d.getElementById('status');st.textContent=open?'Aberto agora':'Fechado agora';st.className='status '+(open?'open':'closed');
 
   /* carrosséis com destaque central */
   d.querySelectorAll('.cf').forEach(function(cf){
