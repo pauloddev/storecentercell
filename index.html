@@ -242,15 +242,13 @@ body.lock{overflow:hidden}
 @media (max-width:860px){.lab-g{grid-template-columns:1fr}.lab-g .tile{max-width:440px;width:100%;justify-self:center;order:-1}}
 
 /* clientes */
-.cli-g{display:grid;grid-template-columns:repeat(4,1fr);grid-template-rows:auto auto;gap:clamp(12px,1.6vw,20px)}
-.cli-g .feat{grid-column:2/4;grid-row:1/3}
+.cli-g{display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(12px,1.6vw,20px)}
+.cli-g .feat{grid-column:1/4;grid-row:1/4;order:-1}
 .cli-g .feat .cap b{font-size:clamp(18px,2vw,26px)}
 .cli-g .tile{border:1px solid var(--cyan-soft)}
 .cli-g .feat{box-shadow:0 0 0 2px var(--cyan),0 0 60px rgba(0,255,255,.25);border:0}
-@media (max-width:760px){.cli-g{grid-template-columns:1fr 1fr}.cli-g .feat{grid-column:1/-1;grid-row:auto;order:-1}}
+@media (max-width:760px){.cli-g{grid-template-columns:1fr 1fr}.cli-g .feat{grid-column:1/-1;grid-row:auto}.cli-g .tile:last-child{grid-column:1/-1;aspect-ratio:2/1}.cli-g .tile:last-child img{object-position:50% 25%}}
 
-.cli-row{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(12px,1.6vw,20px);margin-top:clamp(12px,1.6vw,20px)}
-.cli-row .tile{border:1px solid var(--cyan-soft)}
 /* localização */
 .loc-g{display:grid;grid-template-columns:1fr 1fr;gap:clamp(14px,2vw,24px)}
 .loc-g .tile{aspect-ratio:auto;height:100%;min-height:420px}
@@ -420,7 +418,6 @@ body.lock{overflow:hidden}
       <ul class="lab-pts rv">
         <li><svg viewBox="0 0 24 24"><use href="#s-chip"/></svg><span><b>Reparo em placa com microscópio</b>Solda e troca de componentes minúsculos</span></li>
         <li><svg viewBox="0 0 24 24"><use href="#i-tool"/></svg><span><b>Bancada com ferramentas de precisão</b>Equipamento próprio para iPhone e Android</span></li>
-        <li><svg viewBox="0 0 24 24"><use href="#i-pin"/></svg><span><b>Seu aparelho não sai da loja</b>Tudo feito aqui em Buritirama</span></li>
       </ul>
       <div class="rv"><a class="btn btn-cyan wa" data-msg="Olá! Quero um diagnóstico do meu celular." href="#" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><use href="#i-wa"/></svg>Pedir diagnóstico</a></div>
     </div>
@@ -538,8 +535,6 @@ body.lock{overflow:hidden}
       <figure class="tile sq rv img" style="margin:0"><img src="img/cli-2.webp" alt="Cliente recebendo seu iPhone" loading="lazy"></figure>
       <figure class="tile sq rv img" style="margin:0"><img src="img/cli-4.webp" alt="Cliente com celular realme novo" loading="lazy"></figure>
       <figure class="tile sq rv img" style="margin:0"><img src="img/cli-5.webp" alt="Cliente com celular novo e sacola" loading="lazy"></figure>
-    </div>
-    <div class="cli-row">
       <figure class="tile sq rv img" style="margin:0"><img src="img/cli-6.webp" alt="Cliente sorrindo com celular novo de capinha rosa e sacola da loja" loading="lazy"></figure>
       <figure class="tile sq rv img" style="margin:0"><img src="img/cli-7.webp" alt="Cliente mostrando seu iPhone novo na loja" loading="lazy"></figure>
       <figure class="tile sq rv img" style="margin:0"><img src="img/cli-8.webp" alt="Cliente com o filho no colo e iPhone novo na mão" loading="lazy"></figure>
