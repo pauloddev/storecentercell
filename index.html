@@ -180,6 +180,7 @@ body.lock{overflow:hidden}
 /* variedades */
 .var-g{display:grid;grid-template-columns:1fr 1fr;gap:clamp(28px,5vw,64px);align-items:center}
 .var-g .tile{max-width:520px;width:100%;justify-self:center}
+.var-g .tile.team{max-width:none;aspect-ratio:1600/1443}
 .var-g h2{font-size:clamp(40px,5.6vw,74px)}
 .var-g p.lead{margin:18px 0 28px;color:var(--ink-muted);font-size:18px;max-width:46ch}
 .chips{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:0;margin:0 0 32px}
@@ -443,15 +444,15 @@ body.lock{overflow:hidden}
 
 <!-- ATENDIMENTO -->
 <section id="atendimento" class="light">
-  <div class="wrap">
-    <div class="at-head">
+  <div class="wrap var-g">
+    <figure class="tile team rv img" style="margin:0"><img src="img/equipe.webp" alt="Equipe da Center Cell uniformizada na entrada da loja" width="1600" height="1443" loading="lazy"><figcaption class="cap"><b>Equipe Center Cell</b><small>Na entrada da loja, em Buritirama</small></figcaption></figure>
+    <div>
       <h2 class="rv"><span class="b">Atendimento</span> <span class="t">impecável.</span></h2>
-      <p class="rv">Você é atendido por gente que entende de celular e explica sem enrolação: ajuda a escolher o aparelho, mostra as opções e acompanha até a entrega.</p>
-    </div>
-    <div class="grid3">
-      <figure class="tile rv img" style="margin:0"><img src="img/atend-perfume.webp" alt="Cliente mostrando dois perfumes árabes Fakhar Lattafa" loading="lazy"></figure>
-      <figure class="tile rv img" style="margin:0"><img src="img/atend-celulares.webp" alt="Cliente mostrando dois celulares novos na frente do letreiro da loja" loading="lazy"></figure>
-      <figure class="tile rv img" style="margin:0"><img src="img/atend-iphone.webp" alt="Cliente falando ao telefone com seu iPhone em frente ao letreiro Center Cell" loading="lazy"></figure>
+      <p class="lead rv">Você é atendido por gente que entende de celular e explica sem enrolação: ajuda a escolher o aparelho, mostra as opções e acompanha até a entrega.</p>
+      <ul class="chips rv">
+        <li>Ajuda a escolher o aparelho</li><li>Explica sem enrolação</li><li>Acompanha até a entrega</li><li>Atende também no WhatsApp</li>
+      </ul>
+      <div class="rv"><a class="btn btn-ink wa" data-msg="Olá! Quero ser atendido pela equipe da Center Cell." href="#" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><use href="#i-wa"/></svg>Falar com a equipe</a></div>
     </div>
   </div>
 </section>
