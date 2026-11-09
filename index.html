@@ -74,6 +74,34 @@ body.lock{overflow:hidden}
 @media (max-width:1020px){.nav{display:none}}
 @media (max-width:480px){.hdr .btn span{display:none}.hdr .btn{padding:0;width:46px}.hdr .logo img{height:38px}}
 
+/* menu mobile */
+.burger{display:none;width:46px;height:46px;border-radius:12px;border:1px solid var(--cyan-line);background:transparent;flex-direction:column;justify-content:center;align-items:center;gap:5px;cursor:pointer;padding:0;transition:background .25s}
+.burger i{display:block;width:20px;height:2px;border-radius:2px;background:var(--cyan)}
+.burger:hover{background:var(--cyan)}.burger:hover i{background:var(--black)}
+@media (max-width:1020px){.burger{display:flex}.hdr .wrap{display:grid;grid-template-columns:46px 1fr auto}.hdr .logo{justify-self:center}}
+.drw{position:fixed;inset:0;z-index:90;background:var(--black);display:flex;flex-direction:column;padding:calc(env(safe-area-inset-top,0px) + 14px) max(20px,env(safe-area-inset-right,0px)) calc(env(safe-area-inset-bottom,0px) + 20px) max(20px,env(safe-area-inset-left,0px));transform:translateX(-100%);visibility:hidden;transition:transform .5s cubic-bezier(.2,.8,.2,1),visibility .5s}
+.drw.open{transform:none;visibility:visible}
+.drw::before{content:"";position:absolute;left:-30%;right:-30%;top:22%;height:2px;background:var(--cyan);box-shadow:0 0 14px 2px rgba(0,255,255,.5);transform:rotate(-24deg);opacity:.25;pointer-events:none}
+.drw-top{display:flex;align-items:center;justify-content:space-between;padding-bottom:16px;border-bottom:1px solid var(--cyan-soft)}
+.drw-top img{height:40px;width:auto}
+.drw-x{width:46px;height:46px;border-radius:12px;border:1px solid var(--cyan-line);background:transparent;color:var(--cyan);display:grid;place-items:center;cursor:pointer;transition:background .25s,color .25s}
+.drw-x:hover{background:var(--cyan);color:var(--black)}.drw-x svg{width:22px;height:22px}
+.drw-body{position:relative;flex:1;overflow:hidden}
+.drw-p{position:absolute;inset:0;overflow-y:auto;display:flex;flex-direction:column;padding-top:12px;transform:translateX(100%);opacity:0;transition:transform .45s cubic-bezier(.2,.8,.2,1),opacity .45s;visibility:hidden}
+.drw-p.on{transform:none;opacity:1;visibility:visible}
+.drw-p.left{transform:translateX(-30%);opacity:0}
+.drw-p a,.drw-p button{display:flex;align-items:center;justify-content:space-between;gap:12px;width:100%;text-align:left;font:600 20px/1.2 var(--font);color:var(--white);background:none;border:0;border-bottom:1px solid rgba(255,255,255,.07);padding:18px 4px;cursor:pointer;letter-spacing:.01em;transition:color .2s,padding .25s}
+.drw-p a:hover,.drw-p button:hover{color:var(--cyan);padding-left:10px}
+.drw-p svg{width:20px;height:20px;color:var(--cyan);flex:none}
+.drw-p .back{justify-content:flex-start;color:var(--cyan);font-size:15px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:12px 4px}
+.drw-p .back:hover{padding-left:4px}
+.drw.open .drw-p.on>*{animation:drwIn .5s cubic-bezier(.2,.8,.2,1) both}
+.drw-p.on>*:nth-child(2){animation-delay:.05s}.drw-p.on>*:nth-child(3){animation-delay:.1s}.drw-p.on>*:nth-child(4){animation-delay:.15s}.drw-p.on>*:nth-child(5){animation-delay:.2s}.drw-p.on>*:nth-child(6){animation-delay:.25s}.drw-p.on>*:nth-child(7){animation-delay:.3s}.drw-p.on>*:nth-child(8){animation-delay:.35s}
+@keyframes drwIn{from{opacity:0;transform:translateX(-18px)}to{opacity:1;transform:none}}
+.drw-foot{display:grid;gap:12px;padding-top:16px;border-top:1px solid var(--cyan-soft)}
+.drw-foot .btn{width:100%}
+.drw-ig{text-align:center;color:var(--muted);font-size:15px}
+
 /* ---------- neon diagonais ---------- */
 .neon{position:absolute;inset:0;overflow:hidden;pointer-events:none}
 .neon i{position:absolute;height:3px;width:160%;left:-30%;background:linear-gradient(90deg,transparent,var(--cyan) 30%,var(--cyan) 70%,transparent);box-shadow:0 0 14px 2px rgba(0,255,255,.55);opacity:.55;transform-origin:center}
@@ -327,6 +355,7 @@ body.lock{overflow:hidden}
 
 <header class="hdr" id="hdr">
   <div class="wrap">
+    <button class="burger" id="burger" aria-label="Abrir menu" aria-controls="drawer" aria-expanded="false"><i></i><i></i><i></i></button>
     <a class="logo" href="#topo" aria-label="Center Cell Store, início"><img src="img/logo_oficial_1.png" alt="Center Cell Store"></a>
     <nav class="nav" aria-label="Seções">
       <a href="#aparelhos">Aparelhos</a><a href="#assistencia">Assistência</a><a href="#laboratorio">Laboratório</a><a href="#acessorios">Acessórios</a><a href="#perfumes">Perfumes</a><a href="#clientes">Clientes</a><a href="#localizacao">Localização</a>
@@ -335,6 +364,48 @@ body.lock{overflow:hidden}
   </div>
 </header>
 
+
+<div class="drw" id="drawer" aria-hidden="true">
+  <div class="drw-top">
+    <img src="img/logo_oficial_1.png" alt="Center Cell Store">
+    <button class="drw-x" id="drwClose" aria-label="Fechar menu"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg></button>
+  </div>
+  <div class="drw-body">
+    <nav class="drw-p on" data-p="main" aria-label="Menu">
+      <a href="#topo">Início</a>
+      <button data-go="produtos">Produtos<svg viewBox="0 0 24 24"><use href="#i-r"/></svg></button>
+      <button data-go="servicos">Serviços<svg viewBox="0 0 24 24"><use href="#i-r"/></svg></button>
+      <button data-go="loja">A loja<svg viewBox="0 0 24 24"><use href="#i-r"/></svg></button>
+      <a href="#localizacao">Localização e horário</a>
+    </nav>
+    <nav class="drw-p" data-p="produtos" aria-label="Produtos">
+      <button class="back" data-go="main"><svg viewBox="0 0 24 24"><use href="#i-l"/></svg>Produtos</button>
+      <a href="#aparelhos">Ver todos os aparelhos</a>
+      <a href="#iphones">iPhone</a>
+      <a href="#videos-celulares">Celulares em vídeo</a>
+      <a href="#acessorios">Acessórios</a>
+      <a href="#variedades">Variedades em acessórios</a>
+      <a href="#videos-acessorios">Acessórios em vídeo</a>
+      <a href="#perfumes">Perfumes árabes</a>
+    </nav>
+    <nav class="drw-p" data-p="servicos" aria-label="Serviços">
+      <button class="back" data-go="main"><svg viewBox="0 0 24 24"><use href="#i-l"/></svg>Serviços</button>
+      <a href="#assistencia">Assistência técnica</a>
+      <a href="#laboratorio">Laboratório</a>
+      <a class="wa" data-msg="Olá! Preciso de um orçamento de conserto." href="#" target="_blank" rel="noopener">Pedir orçamento</a>
+    </nav>
+    <nav class="drw-p" data-p="loja" aria-label="A loja">
+      <button class="back" data-go="main"><svg viewBox="0 0 24 24"><use href="#i-l"/></svg>A loja</button>
+      <a href="#ceo">Marlos Daniel, 9 anos de loja</a>
+      <a href="#atendimento">Nossa equipe</a>
+      <a href="#clientes">Clientes satisfeitos</a>
+    </nav>
+  </div>
+  <div class="drw-foot">
+    <a class="btn btn-cyan wa" href="#" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><use href="#i-wa"/></svg>Chamar no WhatsApp</a>
+    <a class="drw-ig" href="https://www.instagram.com/center_cell.ba/" target="_blank" rel="noopener">@center_cell.ba</a>
+  </div>
+</div>
 <main id="topo">
 <!-- HERO -->
 <section class="hero">
@@ -723,6 +794,17 @@ body.lock{overflow:hidden}
     cf.tabIndex=0;cf.addEventListener('keydown',function(e){if(e.key==='ArrowRight'){go(act+1);restart()}if(e.key==='ArrowLeft'){go(act-1);restart()}});
     addEventListener('resize',layout);layout();restart();
   });
+
+  /* menu mobile (gaveta com submenus) */
+  var drw=d.getElementById('drawer'),burger=d.getElementById('burger');
+  function showP(name){drw.querySelectorAll('.drw-p').forEach(function(p){var on=p.getAttribute('data-p')===name;p.classList.toggle('left',!on&&name!=='main'&&p.getAttribute('data-p')==='main');p.classList.toggle('on',on)})}
+  function openD(){showP('main');drw.classList.add('open');drw.setAttribute('aria-hidden','false');burger.setAttribute('aria-expanded','true');d.body.classList.add('lock');setTimeout(function(){var f=drw.querySelector('.drw-p.on a,.drw-p.on button');f&&f.focus({preventScroll:true})},300)}
+  function closeD(){drw.classList.remove('open');drw.setAttribute('aria-hidden','true');burger.setAttribute('aria-expanded','false');d.body.classList.remove('lock')}
+  burger.addEventListener('click',openD);d.getElementById('drwClose').addEventListener('click',function(){closeD();burger.focus()});
+  drw.querySelectorAll('[data-go]').forEach(function(b){b.addEventListener('click',function(){showP(b.getAttribute('data-go'))})});
+  drw.querySelectorAll('a').forEach(function(a){a.addEventListener('click',closeD)});
+  addEventListener('keydown',function(e){if(e.key==='Escape'&&drw.classList.contains('open'))closeD()});
+  addEventListener('resize',function(){if(innerWidth>1020&&drw.classList.contains('open'))closeD()});
 
   /* rolagem suave compensando o header */
   d.querySelectorAll('a[href^="#"]').forEach(function(a){a.addEventListener('click',function(e){var id=a.getAttribute('href');if(id.length<2)return;var t=d.querySelector(id);if(!t)return;e.preventDefault();scrollTo({top:t.getBoundingClientRect().top+scrollY-70,behavior:reduce?'auto':'smooth'})})});
